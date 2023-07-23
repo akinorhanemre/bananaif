@@ -1,3 +1,5 @@
+app = Potassium("my_app")
+
 import os
 import torch
 os.environ['FORCE_MEM_EFFICIENT_ATTN'] = "1"
@@ -24,7 +26,6 @@ from huggingface_hub import login
 from potassium import Potassium, Request, Response
 from urllib.request import urlretrieve
 
-app = Potassium("my_app")
 
 @app.init
 def init():
