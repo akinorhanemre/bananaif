@@ -11,7 +11,7 @@ app = Potassium("my_app")
 
 @app.init
 def init():
-    huggingface_hub.login('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')
+    login('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')
 
     device = "cuda:0"
     if_I = IFStageI("IF-I-XL-v1.0", device=device)
