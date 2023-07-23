@@ -3,7 +3,7 @@ from deepfloyd_if.modules.t5 import T5Embedder
 from deepfloyd_if.pipelines import style_transfer
 from PIL import Image
 from potassium import Potassium, Request, Response
-import huggingface_hub
+from huggingface_hub import login
 import random
 import json
 
