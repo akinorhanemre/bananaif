@@ -1,0 +1,13 @@
+git+https://github.com/0x7o/IF.git
+huggingface_hub==0.14.1
+numpy==1.24.3
+Pillow==9.5.0
+safetensors==0.3.0
+sentencepiece==0.1.98
+tokenizers==0.13.3
+torch==2.0
+torchvision==0.15.1
+tqdm==4.65.0
+git+https://github.com/openai/CLIP.git
+scikit-image
+potassium==0.1.0  # Add the version that fits your needs
