@@ -31,7 +31,7 @@ from urllib.request import urlretrieve
 def init():
     login('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')
 
-    device = "cuda:0"
+    device = 0 if torch.cuda.is_available() else -1
     if_I = IFStageI("IF-I-XL-v1.0", device=device)
     if_II = IFStageII("IF-II-L-v1.0", device=device)
     if_III = StableStageIII("stable-diffusion-x4-upscaler", device=device)
