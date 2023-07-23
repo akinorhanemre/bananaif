@@ -4,8 +4,8 @@ WORKDIR /
 
 COPY . .
 
-# Install git
-RUN apt-get update && apt-get install -y git
+# Install git and g++
+RUN apt-get update && apt-get install -y git g++
 
 RUN pip install -r requirements.txt
 
