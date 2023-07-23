@@ -1,11 +1,28 @@
+import os
+import torch
+os.environ['FORCE_MEM_EFFICIENT_ATTN'] = "1"
+import sys
 from deepfloyd_if.modules import IFStageI, IFStageII, StableStageIII
 from deepfloyd_if.modules.t5 import T5Embedder
-from deepfloyd_if.pipelines import style_transfer
-from PIL import Image
-from potassium import Potassium, Request, Response
-from huggingface_hub import login
+from deepfloyd_if.pipelines import dream, style_transfer, super_resolution, inpainting
+import torch.nn.functional as F
 import random
+import torchvision.transforms as T
+import numpy as np
+import requests
+from PIL import Image
+import torch
+import re
+import requests
+from PIL import Image
+import torch
+import http.client
 import json
+import base64
+import requests
+from huggingface_hub import login
+from potassium import Potassium, Request, Response
+from urllib.request import urlretrieve
 
 app = Potassium("my_app")
 
@@ -28,26 +45,6 @@ def init():
 
 @app.handler()
 def handler(context: dict, request: Request) -> Response:
-    # Extract the model from the context
-    if_I = context.get("if_I")
-    if_II = context.get("if_II")
-    if_III = context.get("if_III")
-    t5 = context.get("t5")
-
-    # Extract the inputs from the request
-    inputs = request.json
-    original_image = inputs["original_image"]
-    prompt = inputs["prompt"]
-    negative_prompt = inputs.get("negative_prompt", "")
-    style_prompt = inputs.get("style_prompt", "")
-    num_outputs = inputs.get("num_outputs", 1)
-    seed = inputs.get("seed", 0)
-    guidance_scale = inputs.get("guidance_scale", 10.0)
-
-    from urllib.request import urlretrieve
-
-@app.handler()
-def handler(context: dict, request: Request) -> Response:
     # Extract the models from the context
     if_I = context.get("if_I")
     if_II = context.get("if_II")
@@ -58,17 +55,12 @@ def handler(context: dict, request: Request) -> Response:
     inputs = request.json
     original_image_url = inputs["original_image"]
     prompt = inputs["prompt"]
-    negative_prompt = inputs.get("negative_prompt", "")
-    style_prompt = inputs.get("style_prompt", "")
-    num_outputs = inputs.get("num_outputs", 1)
-    seed = inputs.get("seed", 0)
-    guidance_scale = inputs.get("guidance_scale", 10.0)
 
     # Download the image from the URL
     urlretrieve(original_image_url, "/tmp/original_image.png")
     original_image = Image.open("/tmp/original_image.png").convert("RGB")
 
-    seed = random.randint(0, 2**32 - 1) if seed == 0 else seed
+    seed = 2
 
     # Generate the style transferred image
     result = style_transfer(
@@ -78,8 +70,6 @@ def handler(context: dict, request: Request) -> Response:
         if_III=if_III,
         disable_watermark=True,
         support_pil_img=original_image,
-        negative_prompt=[negative_prompt] * num_outputs,
-        style_prompt=[style_prompt] * num_outputs,
         prompt=[prompt] * num_outputs,
         seed=seed,
         if_I_kwargs={
