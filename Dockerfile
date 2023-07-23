@@ -11,6 +11,7 @@ RUN pip install -r requirements.txt
 
 # Install xformers directly
 RUN pip install -v -U git+https://github.com/facebookresearch/xformers.git@main#egg=xformers
+RUN pip install deepfloyd-if==1.0.1
 
 EXPOSE 8000
 
