@@ -61,6 +61,8 @@ def handler(context: dict, request: Request) -> Response:
     original_image = Image.open("/tmp/original_image.png").convert("RGB")
 
     seed = 2
+    guidance_scale = 1.0 # define your value here
+    num_outputs = 1 # define your value here
 
     # Generate the style transferred image
     result = style_transfer(
