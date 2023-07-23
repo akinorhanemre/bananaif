@@ -1,3 +1,4 @@
+from potassium import Potassium, Request, Response
 app = Potassium("my_app")
 
 import os
@@ -23,7 +24,6 @@ import json
 import base64
 import requests
 from huggingface_hub import login
-from potassium import Potassium, Request, Response
 from urllib.request import urlretrieve
 
 
