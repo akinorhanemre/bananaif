@@ -1,8 +1,7 @@
 huggingface_hub==0.16.4
 numpy==1.18.5
 pillow==10.0.0
-git+https://github.com/openai/CLIP.git
-potassium==0.1.0  # Add the version that fits your needs
+potassium==0.1.0
 protobuf==3.20
 requests==2.31.0
 deepfloyd-if==1.0.1
